@@ -32,7 +32,7 @@ class bdochrome:
 
         # csv 날짜와 현재 날짜가 일치 할 경우 쿠폰 번호를 저장
         for line in rdr:
-            date_regex = re.compile('\d')
+            date_regex = re.compile('\d+')
             csv_month = date_regex.findall(line[0])[0]
             csv_day = date_regex.findall(line[0])[1]
             if csv_month == month and csv_day == day:
@@ -70,7 +70,7 @@ class bdochrome:
         # csv 날짜와 현재 날짜가 일치 할 경우 쿠폰 번호를 저장
         coupon_ea = 0
         for line in rdr:
-            date_regex = re.compile('\d')
+            date_regex = re.compile('\d+')
             csv_month = date_regex.findall(line[0])[0]
             csv_day = date_regex.findall(line[0])[1]
             if csv_month == month and csv_day == day:
@@ -121,17 +121,21 @@ class bdochrome:
 
         for coupon_serial in coupon_num_list:
             coupon_input.send_keys(coupon_serial)
+            sleep(0.3)
             coupon_input.find_element_by_xpath('//*[@id="couponRegister"]/fieldset/button').click()
 
-        driver.find_element_by_xpath('//*[@id="couponUseLayer"]/div[2]/form/fieldset/div/a').click() #character_select
-        driver.find_element_by_xpath('//*[@id="couponUseLayer"]/div[2]/form/fieldset/div/div[1]/div/ul/li[1]/a').click() #first_character_select
-        driver.find_element_by_xpath('//*[@id="couponUseLayer"]/div[2]/form/fieldset/div/div[2]/div[3]/button[1]').click() #get_coupon_confirm
-        alert = driver.switch_to.alert # 쿠폰 사용 확인 클릭
-        alert.accept()
-        sleep(0.5)
-        alert = driver.switch_to.alert # 쿠폰 사용 확인 완료 클릭
-        alert.accept()
-        sleep(0.5)
+            driver.find_element_by_xpath(
+                '//*[@id="couponUseLayer"]/div[2]/form/fieldset/div/a').click()  # character_select
+            driver.find_element_by_xpath(
+                '//*[@id="couponUseLayer"]/div[2]/form/fieldset/div/div[1]/div/ul/li[1]/a').click()  # first_character_select
+            driver.find_element_by_xpath(
+                '//*[@id="couponUseLayer"]/div[2]/form/fieldset/div/div[2]/div[3]/button[1]').click()  # get_coupon_confirm
+            alert = driver.switch_to.alert  # 쿠폰 사용 확인 클릭
+            alert.accept()
+            sleep(0.5)
+            alert = driver.switch_to.alert  # 쿠폰 사용 확인 완료 클릭
+            alert.accept()
+            sleep(0.5)
 
 
 
